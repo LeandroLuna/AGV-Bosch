@@ -4,7 +4,7 @@ import RPi.GPIO as GPIO
 from mfrc522 import SimpleMFRC522
 
 # cria uma copia da biblioteca SimpleMFRC522 como um objeto. É a onde ira armazenar todas as configuraçoes escritas na TAG que chamare-mos posteriomente.
-reader = SimpleMFRC522()
+leia = SimpleMFRC522()
 
 try:
     # Chama o nosso objeto de leitura; envia para o circuito uma ordem para começar uma leitura de qualquer TAG posicionado sobre o leitor RC522.
