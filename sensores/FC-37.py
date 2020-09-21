@@ -7,7 +7,7 @@ try:
     # Define o pino 7 como INPUT (receber informações)
     GPIO.setup(chuva, GPIO.IN)
 
-    # Se estiver chovendo, o sensor analogico completara o seu circuito (mais informações no readme sobre os sensores), ficando com sinal 1.
+    # Se estiver chovendo, o sensor analogico completara o seu circuito (mais informações no README.md sobre os sensores**), ficando com sinal 1.
     if chuva == 1:
         print('Está chovendo!')
     # Caso o circuito não esteja completo (0), é sinal de que não está chovendo.
