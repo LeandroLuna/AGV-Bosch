@@ -13,4 +13,4 @@ client = mqtt.Client("client_name")
 mqtt_client_connect()
 
 while True:
-    print('MQTT TA COMEÇANDO A TER ROSTO')
+    print('MQTT ESTÁ COMEÇANDO A ANDAR!!!!!')
