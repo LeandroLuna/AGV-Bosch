@@ -9,12 +9,16 @@ def itsrainingmen():
         # Define o pino 7 como INPUT (receber informações)
         GPIO.setup(chuva, GPIO.IN)
 
-        # Se estiver chovendo, o sensor analogico completara o seu circuito (mais informações no README.md sobre os sensores**), ficando com sinal 1.
-        if chuva == 1:
-            print('Está chovendo!')
-        # Caso o circuito não esteja completo (0), é sinal de que não está chovendo.
+        # Caso o circuito não esteja completo (0), é sinal de que está chovendo.
+        if chuva == 0:
+            GPIO.cleanup()  # Limpa as portas GPIO para não entrar em conflito com nenhum sensor
+            return 'Está chovendo'
+        # Se estiver chovendo o sensor analogico completara o seu circuito (mais informações no README.md sobre os sensores**), ficando com sinal 1, indicando que não está chovendo.
         else:
-            print('Não está chovendo!')
-
-    GPIO.cleanup()  # Limpa as portas GPIO para não entrar em conflito com nenhum sensor
+            GPIO.cleanup()
+            return 'Não está chovendo!'
     finally:
+        GPIO.cleanup()
+
+
+print(itsrainingmen())

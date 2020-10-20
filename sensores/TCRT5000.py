@@ -1,5 +1,6 @@
 # importar a biblioteca de controle GPIO
 import RPi.GPIO as gpio
+from sensores.Motores import *
 
 # definir o mapeamento dos pins para placa
 gpio.setmode(gpio.BOARD)
