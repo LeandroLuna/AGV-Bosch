@@ -13,4 +13,4 @@ from sensores.AIO import distance, itsrainingmen
 # mqtt_client_connect()
 
 # while True:
-#    print('MQTT ESTÁ COMEÇANDO A ANDAR!!!!!')
+#    print('MQTT A FUNCIONAR!!!!!')
