@@ -1,20 +1,46 @@
 import sqlite3
 # from qrcode_rfid import *
+# baterias, filtros, freios
+import time
+import Adafruit_DHT
 
-ID = input('Informe o ID do produto: ')
-Local = input('Informe a localizaçao do produto: ')
 
-conexao = sqlite3.connect('estoques.db')
-cursor = conexao.cursor()
-#cursor.execute('create table estoques(ID integer, Local text)')
-cursor.execute(
-    'insert into estoques(ID, Local) values (?,?)', (ID, Local))
-conexao.commit()
-cursor.execute('SELECT * FROM estoques')
-estoque_apresentar = cursor.fetchall()
+# Open SQLite database and create a cursor for later queries.
+conn = sqlite3.connect('dht.db')
+c = conn.cursor()
 
-for banco_dados in estoque_apresentar:
-    print('ID: %s \nLocalizaçao: %s' % (estoque_apresentar))
+# Read all the configured sensors from the DB.
+c.execute('SELECT name, type, pin FROM sensors')
+sensors = []
+for row in c:
+    name, dht_type, pin = row
+    print('Configuring sensor: {0} of type: {1} on pin: {2}'.format(
+        name, dht_type, pin))
+    # Convert DHT type from string to DHT library value.
+    if dht_type == 'DHT22':
+        dht_type = Adafruit_DHT.DHT22
+    elif dht_type == 'DHT11':
+        dht_type = Adafruit_DHT.DHT11
+    else:
+        raise RuntimeError('Unknown sensor type: {0}'.format(dht_type))
+    # Save the sensor into the list of configured sensors.
+    sensors.append((name, dht_type, pin))
 
-cursor.close()
-conexao.close()
+# Main loop to read each sensor and save the readings in the database.
+print('Saving sensor data every two seconds (press Ctrl-C to quit)...')
+while True:
+    # Save the current unix time for this measurement.
+    reading_time = int(time.time())
+    # Go through each sensor and take a reading.
+    for s in sensors:
+        name, dht_type, pin = s
+        humidity, temperature = Adafruit_DHT.read_retry(dht_type, pin)
+        print('Read sensor: {0} humidity: {1:0.2f}% temperature: {2:0.2f}C'.format(
+            name, humidity, temperature))
+        # Save the reading in the readings table.
+        c.execute('INSERT INTO readings VALUES (?, ?, ?)',
+                  (reading_time, '{0} Humidity'.format(name), humidity))
+        c.execute('INSERT INTO readings VALUES (?, ?, ?)',
+                  (reading_time, '{0} Temperature'.format(name), temperature))
+        conn.commit()
+    time.sleep(2.0)
