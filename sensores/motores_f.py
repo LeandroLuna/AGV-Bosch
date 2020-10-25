@@ -1,4 +1,5 @@
 import RPi.GPIO as GPIO
+import FC37
 import time
 
 GPIO.setmode(GPIO.BOARD)  # https://www.google.com/search?q=raspberry+pi+zero+w+gpio&tbm=isch&ved=2ahUKEwjC7KC6-sDsAhU_BLkGHXM7D78Q2-cCegQIABAA&oq=raspberry+pi+zero+w+gpio&gs_lcp=CgNpbWcQAzICCAAyAggAMgIIADICCAAyBAgAEB4yBAgAEBgyBAgAEBgyBAgAEBgyBAgAEBgyBAgAEBg6BAgAEENQkQtY1RBgmxRoAHAAeACAAWyIAfIDkgEDMy4ymAEAoAEBqgELZ3dzLXdpei1pbWfAAQE&sclient=img&ei=uK6NX8KwJL-I5OUP8_a8-As&bih=730&biw=1517&safe=strict#imgrc=-zpdx6MHPVA5qM (GPIO dos retangulos externos)
@@ -64,82 +65,106 @@ def Parar():
 
 def Frente_Esquerda():
     GPIO.output(i1, GPIO.HIGH)
-    a.ChangeDutyCycle(100)
+    if FC37.itsrainingmen() == 'Está chovendo':
+        a.ChangeDutyCycle(60)
+    else:
+        a.ChangeDutyCycle(100)
 
 
 def Frente_Esquerda_Off():
     GPIO.output(i1, GPIO.LOW)
-    a.ChangeDutyCycle(100)
+    a.ChangeDutyCycle(0)
 
 
 def Frente_Esquerda_Reverso():
     GPIO.output(i2, GPIO.HIGH)
-    a.ChangeDutyCycle(100)
+    if FC37.itsrainingmen() == 'Está chovendo':
+        a.ChangeDutyCycle(60)
+    else:
+        a.ChangeDutyCycle(100)
 
 
 def Frente_Esquerda_Reverso_Off():
     GPIO.output(i2, GPIO.LOW)
-    a.ChangeDutyCycle(100)
+    a.ChangeDutyCycle(0)
 
 
 def Frente_Direita():
     GPIO.output(i3, GPIO.HIGH)
-    b.ChangeDutyCycle(100)
+    if FC37.itsrainingmen() == 'Está chovendo':
+        b.ChangeDutyCycle(60)
+    else:
+        b.ChangeDutyCycle(100)
 
 
 def Frente_Direita_Off():
     GPIO.output(i3, GPIO.LOW)
-    a.ChangeDutyCycle(100)
+    b.ChangeDutyCycle(0)
 
 
 def Frente_Direita_Reverso():
     GPIO.output(i4, GPIO.HIGH)
-    b.ChangeDutyCycle(100)
+    if FC37.itsrainingmen() == 'Está chovendo':
+        b.ChangeDutyCycle(60)
+    else:
+        b.ChangeDutyCycle(100)
 
 
 def Frente_Direita_Reverso_Off():
     GPIO.output(i4, GPIO.LOW)
-    a.ChangeDutyCycle(100)
+    b.ChangeDutyCycle(0)
 
 
 def Tras_Esquerda():
     GPIO.output(i5, GPIO.HIGH)
-    c.ChangeDutyCycle(100)
+    if FC37.itsrainingmen() == 'Está chovendo':
+        c.ChangeDutyCycle(60)
+    else:
+        c.ChangeDutyCycle(100)
 
 
 def Tras_Esquerda_Off():
     GPIO.output(i5, GPIO.LOW)
-    a.ChangeDutyCycle(100)
+    c.ChangeDutyCycle(0)
 
 
 def Tras_Esquerda_Reverso():
     GPIO.output(i6, GPIO.HIGH)
-    c.ChangeDutyCycle(100)
+    if FC37.itsrainingmen() == 'Está chovendo':
+        c.ChangeDutyCycle(60)
+    else:
+        c.ChangeDutyCycle(100)
 
 
 def Tras_Esquerda_Reverso_Off():
     GPIO.output(i6, GPIO.LOW)
-    a.ChangeDutyCycle(100)
+    c.ChangeDutyCycle(0)
 
 
 def Tras_Direita():
     GPIO.output(i7, GPIO.HIGH)
-    d.ChangeDutyCycle(100)
+    if FC37.itsrainingmen() == 'Está chovendo':
+        d.ChangeDutyCycle(60)
+    else:
+        d.ChangeDutyCycle(100)
 
 
 def Tras_Direita_Off():
     GPIO.output(i7, GPIO.LOW)
-    a.ChangeDutyCycle(100)
+    d.ChangeDutyCycle(0)
 
 
 def Tras_Direita_Reverso():
     GPIO.output(i8, GPIO.HIGH)
-    d.ChangeDutyCycle(100)
+    if FC37.itsrainingmen() == 'Está chovendo':
+        d.ChangeDutyCycle(60)
+    else:
+        d.ChangeDutyCycle(100)
 
 
 def Tras_Direita_Reverso_Off():
     GPIO.output(i8, GPIO.LOW)
-    a.ChangeDutyCycle(100)
+    d.ChangeDutyCycle(0)
 
 
 # def Frente_Frente():

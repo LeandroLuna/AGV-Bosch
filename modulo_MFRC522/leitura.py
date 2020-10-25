@@ -1,4 +1,4 @@
-# todas funçoes necessarias para interagir com os  PINS
+# pinagens
 import RPi.GPIO as GPIO
 # funções do modulo simplificadas, também possivel usar a biblioteca MFRC522
 from mfrc522 import SimpleMFRC522

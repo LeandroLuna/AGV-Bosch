@@ -1,5 +1,6 @@
-from sensores.AIO import distance, itsrainingmen
-
+import sensores.FC37
+import sensores.HCSR04
+import sensores.TCRT5000
 #import time
 #import paho.mqtt.client as mqtt
 #broker_url = "iot.eclipse.org"
