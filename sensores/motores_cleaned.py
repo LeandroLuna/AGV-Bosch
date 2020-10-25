@@ -2,77 +2,160 @@ import RPi.GPIO as GPIO
 import time
 
 GPIO.setmode(GPIO.BOARD)  # https://www.google.com/search?q=raspberry+pi+zero+w+gpio&tbm=isch&ved=2ahUKEwjC7KC6-sDsAhU_BLkGHXM7D78Q2-cCegQIABAA&oq=raspberry+pi+zero+w+gpio&gs_lcp=CgNpbWcQAzICCAAyAggAMgIIADICCAAyBAgAEB4yBAgAEBgyBAgAEBgyBAgAEBgyBAgAEBgyBAgAEBg6BAgAEENQkQtY1RBgmxRoAHAAeACAAWyIAfIDkgEDMy4ymAEAoAEBqgELZ3dzLXdpei1pbWfAAQE&sclient=img&ei=uK6NX8KwJL-I5OUP8_a8-As&bih=730&biw=1517&safe=strict#imgrc=-zpdx6MHPVA5qM (GPIO dos retangulos externos)
-GPIO.cleanup()
-# Shield1
-# Frontal Esquerdo
-in1 = 7
-in2 = 16
-ena = 11
-GPIO.setup(in1, GPIO.OUT)
-GPIO.setup(in2, GPIO.OUT)
-GPIO.setup(ena, GPIO.OUT)
-a = GPIO.PWM(ena, 1000)
+# Para x.ChangeDutyCycle(n) ; x = {a,b,c,d} e 'n' ]60, 100[
+# if chuva == 0, n = 60. Else (chuva == 1), n = 100
+
+i1 = 7
+i2 = 11
+ea = 16
+GPIO.setup(i1, GPIO.OUT)
+GPIO.setup(i2, GPIO.OUT)
+GPIO.setup(ea, GPIO.OUT)
+a = GPIO.PWM(ea, 1000)
 a.start(100)
-# Frontal Direito
-in3 = 13
-in4 = 15
-enb = 21
-GPIO.setup(in3, GPIO.OUT)
-GPIO.setup(in4, GPIO.OUT)
-GPIO.setup(enb, GPIO.OUT)
-b = GPIO.PWM(enb, 1000)
+GPIO.output(i1, GPIO.LOW)  # motores desligados frente esquerda
+GPIO.output(i2, GPIO.LOW)
+
+
+i3 = 13
+i4 = 15
+eb = 21
+GPIO.setup(i3, GPIO.OUT)
+GPIO.setup(i4, GPIO.OUT)
+GPIO.setup(eb, GPIO.OUT)
+b = GPIO.PWM(eb, 1000)
 b.start(100)
-# Shield2
-# Traseiro Esquerdo
-in11 = 24
-in22 = 26
-enaa = 29
-GPIO.setup(in11, GPIO.OUT)
-GPIO.setup(in22, GPIO.OUT)
-GPIO.setup(enaa, GPIO.OUT)
-c = GPIO.PWM(enaa, 1000)
+GPIO.output(i3, GPIO.LOW)  # motores desligados frente direita
+GPIO.output(i4, GPIO.LOW)
+
+i5 = 24
+i6 = 26
+ec = 29
+GPIO.setup(i5, GPIO.OUT)
+GPIO.setup(i6, GPIO.OUT)
+GPIO.setup(ec, GPIO.OUT)
+c = GPIO.PWM(ec, 1000)
 c.start(100)
-# Traseiro Direito
-in33 = 35
-in44 = 36
-enbb = 37
-GPIO.setup(in33, GPIO.OUT)
-GPIO.setup(in44, GPIO.OUT)
-GPIO.setup(enbb, GPIO.OUT)
-d = GPIO.PWM(enbb, 1000)
+GPIO.output(i5, GPIO.LOW)  # motores desligados tras esquerda
+GPIO.output(i6, GPIO.LOW)
+
+i7 = 33
+i8 = 35
+ed = 36
+GPIO.setup(i7, GPIO.OUT)
+GPIO.setup(i8, GPIO.OUT)
+GPIO.setup(ed, GPIO.OUT)
+d = GPIO.PWM(ed, 1000)
 d.start(100)
-
-# p.ChangeDutyCycle(x) == 60 < x < 100
-
-
-def stop(x):  # motores desligados
-    GPIO.output(in1, GPIO.LOW)
-    GPIO.output(in2, GPIO.LOW)
-    GPIO.output(in3, GPIO.LOW)
-    GPIO.output(in4, GPIO.LOW)
-    GPIO.output(in11, GPIO.LOW)
-    GPIO.output(in22, GPIO.LOW)
-    GPIO.output(in33, GPIO.LOW)
-    GPIO.output(in44, GPIO.LOW)
-    time.sleep(x)
+GPIO.output(i7, GPIO.LOW)  # motores desligados tras esquerda
+GPIO.output(i8, GPIO.LOW)
 
 
-def FrontalEsquerdaFrente(x):
-    GPIO.output(in1, GPIO.HIGH)
+def Parar():
+    GPIO.output(i1, GPIO.LOW)
+    GPIO.output(i2, GPIO.LOW)
+    GPIO.output(i3, GPIO.LOW)
+    GPIO.output(i4, GPIO.LOW)
+    GPIO.output(i5, GPIO.LOW)
+    GPIO.output(i6, GPIO.LOW)
+    GPIO.output(i7, GPIO.LOW)
+    GPIO.output(i8, GPIO.LOW)
+
+
+def Frente_Esquerda():
+    GPIO.output(i1, GPIO.HIGH)
     a.ChangeDutyCycle(100)
-    time.sleep(x)
-    GPIO.output(in1, GPIO.LOW)
 
 
-def FrontalEsquerdaReverso(x):
-    GPIO.output(in2, GPIO.HIGH)
+def Frente_Esquerda_Off():
+    GPIO.output(i1, GPIO.LOW)
     a.ChangeDutyCycle(100)
-    time.sleep(x)
-    GPIO.output(in2, GPIO.LOW)
 
 
-while True:
-    stop(1)
-    FrontalEsquerdaFrente(5)
-    FrontalEsquerdaReverso(5)
-    GPIO.cleanup()
+def Frente_Esquerda_Reverso():
+    GPIO.output(i2, GPIO.HIGH)
+    a.ChangeDutyCycle(100)
+
+
+def Frente_Esquerda_Reverso_Off():
+    GPIO.output(i2, GPIO.LOW)
+    a.ChangeDutyCycle(100)
+
+
+def Frente_Direita():
+    GPIO.output(i3, GPIO.HIGH)
+    b.ChangeDutyCycle(100)
+
+
+def Frente_Direita_Off():
+    GPIO.output(i3, GPIO.LOW)
+    a.ChangeDutyCycle(100)
+
+
+def Frente_Direita_Reverso():
+    GPIO.output(i4, GPIO.HIGH)
+    b.ChangeDutyCycle(100)
+
+
+def Frente_Direita_Reverso_Off():
+    GPIO.output(i4, GPIO.LOW)
+    a.ChangeDutyCycle(100)
+
+
+def Tras_Esquerda():
+    GPIO.output(i5, GPIO.HIGH)
+    c.ChangeDutyCycle(100)
+
+
+def Tras_Esquerda_Off():
+    GPIO.output(i5, GPIO.LOW)
+    a.ChangeDutyCycle(100)
+
+
+def Tras_Esquerda_Reverso():
+    GPIO.output(i6, GPIO.HIGH)
+    c.ChangeDutyCycle(100)
+
+
+def Tras_Esquerda_Reverso_Off():
+    GPIO.output(i6, GPIO.LOW)
+    a.ChangeDutyCycle(100)
+
+
+def Tras_Direita():
+    GPIO.output(i7, GPIO.HIGH)
+    d.ChangeDutyCycle(100)
+
+
+def Tras_Direita_Off():
+    GPIO.output(i7, GPIO.LOW)
+    a.ChangeDutyCycle(100)
+
+
+def Tras_Direita_Reverso():
+    GPIO.output(i8, GPIO.HIGH)
+    d.ChangeDutyCycle(100)
+
+
+def Tras_Direita_Reverso_Off():
+    GPIO.output(i8, GPIO.LOW)
+    a.ChangeDutyCycle(100)
+
+
+# def Frente_Frente():
+#    GPIO.output(i1, GPIO.HIGH)
+#    GPIO.output(i3, GPIO.HIGH)
+#    GPIO.output(i5, GPIO.HIGH)
+#    GPIO.output(i7, GPIO.HIGH)
+#    a.ChangeDutyCycle(100)
+#    b.ChangeDutyCycle(100)
+#    c.ChangeDutyCycle(100)
+#    d.ChangeDutyCycle(100)
+#    time.sleep(8)
+#    GPIO.output(i1, GPIO.LOW)
+#    GPIO.output(i3, GPIO.LOW)
+#    GPIO.output(i5, GPIO.LOW)
+#    GPIO.output(i7, GPIO.LOW)
+
+
+# GPIO.cleanup()

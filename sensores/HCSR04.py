@@ -1,11 +1,11 @@
 import RPi.GPIO as GPIO
 import time
 
+GPIO.setmode(GPIO.BOARD)  # Para numerar os pinos fisicos
+
 
 def distance():
     try:
-        GPIO.setmode(GPIO.BOARD)  # Para numerar os pinos fisicos
-
         PIN_TRIGGER = 7  # Define o pino do sensor que emitira a onda sonora
         PIN_ECHO = 11  # Define o pino do sensor que receberá a onda sonora
 
@@ -41,4 +41,5 @@ def distance():
     return distancia
 
 
-print(f"Distancia: {distance()}cm")
+while True:
+    print(f"Distancia: {distance()}cm")
