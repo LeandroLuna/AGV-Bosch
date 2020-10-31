@@ -14,7 +14,7 @@ GPIO.setup(rightSensor, GPIO.IN)
 
 # chamar a função para confirmar que os motores estão desligados
 motores_f.Parar()
-# desligar as mensagens de perigo
+# desligar as mensagens de erro
 GPIO.setwarnings(False)
 
 while True:  # Loop principal

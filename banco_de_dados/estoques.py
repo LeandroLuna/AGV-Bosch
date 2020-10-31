@@ -44,10 +44,6 @@ while resp == 'sim':
     tipo_produto = raw_input(
         "Informe a categoria do tipo do produto a ser inserido no banco de dados: \n\n\t1.Freios\n\t2.Filtros\n\t3.Baterias\n\n*Escreva por extenso: ")
     if tipo_produto == 'Freios':
-        # cursor.execute("CREATE TABLE freios(id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,"
-        #				"nome TEXT,"
-        #				"posicao TINYINT,"
-        #				"data TEXT)")
         nome = raw_input("Informe o nome para identificacao do produto: ")
         data = time.strftime('%Y-%m-%d %H:%M:%S')
         posicao(x, pos)

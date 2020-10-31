@@ -10,6 +10,6 @@ try:
     texto = input('Dado a ser escrito na TAG: ')
     print("Posicione sua TAG para escrita")
     leia.write(texto)
-    print("Escrita!")
+    print("Informações escritas com sucesso!")
 finally:
     GPIO.cleanup()  # Limpar saida para não confundir demais scripts

@@ -157,3 +157,93 @@ def distance(PIN_TRIGGER, PIN_ECHO):
     finally:
         GPIO.cleanup()
     return distancia
+
+
+resp = 'sim'
+while resp == 'sim':
+    categoria = input(
+        'Informe a categoria do produto a ser inserido no estoque: \n1.Freios\n2.Filtros\n3.Baterias')
+    if categoria == 'Freios':
+        x = 5
+    elif categoria == 'Filtros':
+        x = 10
+    elif categoria == 'Baterias':
+        x = 15
+    else:
+        resp = input(
+            'Categoria informada nao consta no banco de dados. Desejaria reiniciar o programa? Responda com "sim" ou "não"')
+
+
+def estoques(x):
+    Frente_Direita
+    Frente_Esquerda
+    Tras_Direita
+    Tras_Esquerda
+    time.sleep(x)
+    Parar
+    GPIO.cleanup()
+    if categoria == 'Freios':
+        Frente_Esquerda
+        Frente_Direita
+        Tras_Esquerda
+        Tras_Direita_Off
+        time.sleep(3)
+        Parar
+        GPIO.cleanup()
+    elif categoria == 'Filtros':
+        Frente_Esquerda
+        Frente_Direita
+        Tras_Esquerda_Off
+        Tras_Direita
+        time.sleep(3)
+        Parar
+        GPIO.cleanup()
+    else:
+        Frente_Esquerda
+        Frente_Direita_Off
+        Tras_Esquerda
+        Tras_Direita_Off
+        time.sleep(3)
+        Parar
+        GPIO.cleanup()
+
+
+estoque_freios = [1, 1, 1, 0]
+estoque_filtros = [1, 0, 1, 0]
+estoque_baterias = [1, 1, 0, 0]
+
+posicao = 1
+y = 0
+
+
+def caminhos(y, posicao):
+    estoques(x)
+    if categoria == 'Freios':
+        while posicao == estoque_freios[y]:
+            y += 1
+        return y
+    elif categoria == 'Filtros':
+        while posicao == estoque_filtros[y]:
+            y += 1
+        return y
+    else:
+        while posicao == estoque_baterias[y]:
+            y += 1
+        return y
+
+
+def estoque_vazio(y, categoria):
+    z = y * 2
+    Frente_Esquerda
+    Frente_Direita
+    Tras_Direita
+    Tras_Esquerda
+    time.sleep(z)
+    Parar()
+    print(
+        f'Produto posicionado com sucesso na posição {y} nos estoques de categoria {categoria}')
+    GPIO.cleanup()
+
+
+caminhos(y, posicao)
+estoque_vazio(y, categoria)
