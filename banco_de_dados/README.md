@@ -11,7 +11,9 @@ Dentro do banco de dados (estoques) encontramos uma tabela (baterias, filtros, f
 
 Na estrutura no interior de cada tabela encontramos as informações a serem armazenadas, tais como:  
 * ID, auto incrementado sempre que um novo dado for inserido na tabela; 
-* Nome, para além da identificação do produto pelo ID, ter-se uma segunda via para acessar cada produto; Posição, usado para informar ao AGV os ‘campos’ livres para armazenagem do produto – para isso o armazém da Bosch precisará ser mapeado e enumerado -; Data, irá armazenar tanto a data, quanto o horário, que a TAG do produto for escrita.  
+* Nome, para além da identificação do produto pelo ID, ter-se uma segunda via para acessar cada produto; 
+* Posição, usado para informar ao AGV os ‘campos’ livres para armazenagem do produto – para isso o armazém da Bosch precisará ser mapeado e enumerado -; 
+* Data, irá armazenar tanto a data, quanto o horário, que a TAG do produto for escrita.  
 
 | *Field*   | *Type*             | *Null* | *Key* | *Default* | *Extra*          |
 |:-------:|:----------------:|:----:|:---:|:-------:|:--------------:|
