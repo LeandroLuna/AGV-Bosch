@@ -3,7 +3,7 @@ Explicação da arquitetura do banco de dados:
 É no banco de dados que as informações lidas das tags RFID serão armazenadas e processadas. Planejado com uma interface SQL com o uso do servidor MariaDB, e com o PHPMYADMIN para gerir e administrar a estrutura SQL através da internet.
 Dentro do banco de dados (estoques) encontramos uma tabela (baterias, filtros, freios) para cada tipo de produto – essa informação será associada e lida em conjunto com as tags RFID: 
 
-|     #H1*estoques*     |
+|     #*estoques*     |
 |:------------------:|
 | baterias           |
 | filtros            |
