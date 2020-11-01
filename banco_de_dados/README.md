@@ -4,7 +4,7 @@ Explicação da arquitetura do banco de dados:
 Dentro do banco de dados (estoques) encontramos uma tabela (baterias, filtros, freios) para cada tipo de produto – essa informação será associada e lida em conjunto com as tags RFID: 
 
 |     *estoques*     |
-:--------------------:
+|:------------------:|
 | baterias           |
 | filtros            |
 | freios             |
