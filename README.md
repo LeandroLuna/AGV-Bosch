@@ -1,7 +1,7 @@
 # AGV-Bosch
 Toda programação do projeto Jabuti-AGV para o desafio Bosch.
 
-Overview do case:
+Overview do projeto:
 O AGV será modulado com base em uma raspberry pi zero W com função de controle e gerenciamento de estoque, visando redução de recursos humanos expendidos e uma maior autonomia para os estoques da Bosch. 
 
 Insight:
@@ -13,5 +13,5 @@ Com o AGV posicionado sobre uma linha projetada, o AGV primeiramente buscará a 
 As informações do estoque serão apresentadas via celular (podendo ser até aplicativos, já que com uso do protocolo MQTT, a informação poderá ser apresentada em diversos lugares), e todo o produto que for removido do estoque deverá obrigatóriamente ser informado no aplicativo para que o robo não perca o controle dos 'campos' vazios e ocupados do estoque.
 
 
-***AVISO: Houve um problema com a arquitetura do projeto e o modulo da mini-camera OV7670. O projeto inicialmente seria construido com base em uma placa arduino, mas todavia vimos que o microprocessador raspberry entregaria uma maior potencia para a montagem eletronica, quanto para uma maior facilidade na conexão MQTT. Dessa mudança pensavamos que a microcamera (modulo OV7670) teria suporte na raspberry, porém o barramento GPIO (I/O) não suporta uma alta velocidade de interface suficiente para o tal módulo. Seria necessário um output de 25mb/s para que esse módulo funcione. As alternativas para contornar esse infortúnio seriam comprar outro modelo de camera que a PI0 suporte, e o único modelo que conhecemos é o Raspicam (OV5647), ou uma camera com suporte USB. Por hora, como não se há tempo hábil para realizarmos a troca desse modulo, removeremos essa tecnologia/funcionalidade do projeto, mas o escopo da ideia original será mantida. 
+***AVISO: Houve um problema com a arquitetura do projeto e o modulo da mini-camera OV7670. O projeto inicialmente seria construido com base em uma placa arduino, mas todavia vimos que o microprocessador raspberry entregaria uma maior potencia para a montagem eletronica, quanto para uma maior facilidade na conexão MQTT. Dessa mudança pensavamos que a microcamera (modulo OV7670) teria suporte na raspberry, porém o barramento GPIO (I/O) não suporta uma alta velocidade de interface suficiente para o tal módulo. Seria necessário um output de 25mb/s para que esse módulo funcione. As alternativas para contornar esse infortúnio seriam comprar outro modelo de camera que a PI0 suporte, e o único modelo que conhecemos é o Raspicam (OV5647), ou uma camera com suporte USB. Por hora, como não se há tempo hábil para realizarmos a troca desse modulo, removeremos essa tecnologia/funcionalidade do projeto, mas o escopo da ideia original será mantida. Obs: Além desse problema de integração, ela não foi entregue a tempo hábil.
 

@@ -1,1 +1,5 @@
-Programação das tags RFID explicada
+Programação do módulo RFID explicada.
+
+RFID - Hardware: O sistema de identificação por rádio frequência, RFID, consiste de 2 componentes principais: um transponder (a TAG) e um transceptor (o leitor). No leitor encontramos um modulo de rádio frequência e uma antena que gerá um campo eletromagnético de alta frequência. Já a TAG é um objeto passivo, que não contém uma bateria, onde nela somente é encontrado um microchip que armazenará e processará a informação recebida através de uma antena.
+
+Funcionamento: O transceptor (leitor) irá criar um campo eletromagnético que quando em proximidade com o transponder (TAG) causará a movimentação dos eletrons através de sua antena, ligando o CHIP - reenviando um novo sinal de rádio frequência, processo chamado como retroespalhamento. Esse novo sinal é detectado e interpretado no transceptor, e consequentemente as informações- tais como: 'o nome do produto', 'a posição onde tal produto será armazenado' e 'data do momento em que foi escrita a TAG' - serão lidas na raspberry e posteriormente armazenadas no banco de dados.  
