@@ -138,14 +138,14 @@ def Tras_Direita_Reverso_Off():
 
 def distance(PIN_TRIGGER, PIN_ECHO):
     try:
-        GPIO.output(PIN_TRIGGER, GPIO.LOW)
+        GPIO.output(PIN_TRIGGER, False)
         print("Esperando o sensor estabilizar")
         time.sleep(2)
         print("Calculando distância")
 
-        GPIO.output(PIN_TRIGGER, GPIO.HIGH)
+        GPIO.output(PIN_TRIGGER, True)
         time.sleep(0.00001)
-        GPIO.output(PIN_TRIGGER, GPIO.LOW)
+        GPIO.output(PIN_TRIGGER, False)
 
         while GPIO.input(PIN_ECHO) == 0:
             tempo_inicial = time.time()
@@ -165,10 +165,13 @@ while resp == 'sim':
         'Informe a categoria do produto a ser inserido no estoque: \n1.Freios\n2.Filtros\n3.Baterias')
     if categoria == 'Freios':
         x = 5
+        resp = 'nao'
     elif categoria == 'Filtros':
         x = 10
+        resp = 'nao'
     elif categoria == 'Baterias':
         x = 15
+        resp = 'nao'
     else:
         resp = input(
             'Categoria informada nao consta no banco de dados. Desejaria reiniciar o programa? Responda com "sim" ou "não"')
