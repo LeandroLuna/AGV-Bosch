@@ -44,6 +44,17 @@ PIN_ECHO = 11
 GPIO.setup(PIN_TRIGGER, GPIO.OUT)
 GPIO.setup(PIN_ECHO, GPIO.IN)
 
+chuva = 7
+GPIO.setup(chuva, GPIO.IN)
+
+leftSensor = 7
+rightSensor = 10
+GPIO.setup(leftSensor, GPIO.IN)
+GPIO.setup(rightSensor, GPIO.IN)
+
+# se debugar fosse tão facil quanto essa função, mundo seria mais bonito..
+GPIO.setwarnings(False)
+
 
 def Parar():
     GPIO.output(i1, GPIO.LOW)
@@ -58,7 +69,10 @@ def Parar():
 
 def Frente_Esquerda():
     GPIO.output(i1, GPIO.HIGH)
-    a.ChangeDutyCycle(100)
+    if itsrainingmen(chuva) == 'Está chovendo':
+        a.ChangeDutyCycle(60)
+    else:
+        a.ChangeDutyCycle(100)
 
 
 def Frente_Esquerda_Off():
@@ -68,7 +82,10 @@ def Frente_Esquerda_Off():
 
 def Frente_Esquerda_Reverso():
     GPIO.output(i2, GPIO.HIGH)
-    a.ChangeDutyCycle(100)
+    if itsrainingmen(chuva) == 'Está chovendo':
+        a.ChangeDutyCycle(60)
+    else:
+        a.ChangeDutyCycle(100)
 
 
 def Frente_Esquerda_Reverso_Off():
@@ -78,7 +95,10 @@ def Frente_Esquerda_Reverso_Off():
 
 def Frente_Direita():
     GPIO.output(i3, GPIO.HIGH)
-    b.ChangeDutyCycle(100)
+    if itsrainingmen(chuva) == 'Está chovendo':
+        b.ChangeDutyCycle(60)
+    else:
+        b.ChangeDutyCycle(100)
 
 
 def Frente_Direita_Off():
@@ -88,7 +108,10 @@ def Frente_Direita_Off():
 
 def Frente_Direita_Reverso():
     GPIO.output(i4, GPIO.HIGH)
-    b.ChangeDutyCycle(100)
+    if itsrainingmen(chuva) == 'Está chovendo':
+        b.ChangeDutyCycle(60)
+    else:
+        b.ChangeDutyCycle(100)
 
 
 def Frente_Direita_Reverso_Off():
@@ -98,7 +121,10 @@ def Frente_Direita_Reverso_Off():
 
 def Tras_Esquerda():
     GPIO.output(i5, GPIO.HIGH)
-    c.ChangeDutyCycle(100)
+    if itsrainingmen(chuva) == 'Está chovendo':
+        c.ChangeDutyCycle(60)
+    else:
+        c.ChangeDutyCycle(100)
 
 
 def Tras_Esquerda_Off():
@@ -108,7 +134,10 @@ def Tras_Esquerda_Off():
 
 def Tras_Esquerda_Reverso():
     GPIO.output(i6, GPIO.HIGH)
-    c.ChangeDutyCycle(100)
+    if itsrainingmen(chuva) == 'Está chovendo':
+        c.ChangeDutyCycle(60)
+    else:
+        c.ChangeDutyCycle(100)
 
 
 def Tras_Esquerda_Reverso_Off():
@@ -118,7 +147,10 @@ def Tras_Esquerda_Reverso_Off():
 
 def Tras_Direita():
     GPIO.output(i7, GPIO.HIGH)
-    d.ChangeDutyCycle(100)
+    if itsrainingmen(chuva) == 'Está chovendo':
+        d.ChangeDutyCycle(60)
+    else:
+        d.ChangeDutyCycle(100)
 
 
 def Tras_Direita_Off():
@@ -128,7 +160,10 @@ def Tras_Direita_Off():
 
 def Tras_Direita_Reverso():
     GPIO.output(i8, GPIO.HIGH)
-    d.ChangeDutyCycle(100)
+    if itsrainingmen(chuva) == 'Está chovendo':
+        d.ChangeDutyCycle(60)
+    else:
+        d.ChangeDutyCycle(100)
 
 
 def Tras_Direita_Reverso_Off():
@@ -137,26 +172,93 @@ def Tras_Direita_Reverso_Off():
 
 
 def distance(PIN_TRIGGER, PIN_ECHO):
+    GPIO.output(PIN_TRIGGER, False)
+    time.sleep(2)
+    GPIO.output(PIN_TRIGGER, True)
+    time.sleep(0.00001)
+    GPIO.output(PIN_TRIGGER, False)
+
+    while GPIO.input(PIN_ECHO) == 0:
+        tempo_inicial = time.time()
+    while GPIO.input(PIN_ECHO) == 1:
+        tempo_final = time.time()
+
+    duracao_onda = tempo_final - tempo_inicial
+    distancia = round(duracao_onda * 17150, 2)
+    return distancia
+
+
+def itsrainingmen(chuva):
     try:
-        GPIO.output(PIN_TRIGGER, False)
-        print("Esperando o sensor estabilizar")
-        time.sleep(2)
-        print("Calculando distância")
-
-        GPIO.output(PIN_TRIGGER, True)
-        time.sleep(0.00001)
-        GPIO.output(PIN_TRIGGER, False)
-
-        while GPIO.input(PIN_ECHO) == 0:
-            tempo_inicial = time.time()
-        while GPIO.input(PIN_ECHO) == 1:
-            tempo_final = time.time()
-
-        duracao_onda = tempo_final - tempo_inicial
-        distancia = round(duracao_onda * 17150, 2)
+        if chuva == 0:
+            return 'Está chovendo'
+        else:
+            return 'Não está chovendo!'
     finally:
         GPIO.cleanup()
-    return distancia
+
+
+def segue_linha(x):
+    tempo = 0
+    for tempo in range(tempo, x, 1):
+        if distance(PIN_TRIGGER, PIN_ECHO) < 15.0:
+            Parar()
+            for x in range(x, 5, 1):
+                print(
+                    'Objeto detectado em uma distância menor que 15cm. Por favor retirar da trajetoria.')
+        time.sleep(10)
+        if GPIO.input(leftSensor) == 0 and GPIO.input(rightSensor) == 0:
+            Frente_Esquerda_Off()
+            Frente_Direita_Off()
+            Tras_Esquerda_Off()
+            Tras_Direita_Off()
+        elif GPIO.input(leftSensor) == 1 and GPIO.input(rightSensor) == 1:
+            Frente_Esquerda()
+            Frente_Direita()
+            Tras_Esquerda()
+            Tras_Direita()
+        elif GPIO.input(leftSensor) == 1 and GPIO.input(rightSensor) == 0:
+            Frente_Esquerda()
+            Frente_Direita_Off()
+            Tras_Esquerda()
+            Tras_Direita_Off()
+        elif GPIO.input(leftSensor) == 0 and GPIO.input(rightSensor) == 1:
+            Frente_Esquerda_Off()
+            Frente_Direita()
+            Tras_Esquerda_Off()
+            Tras_Direita_Off()
+
+
+def linha_seguir(z):
+    tempo = 0
+    tempo = 0
+    for tempo in range(tempo, z, 1):
+        if distance(PIN_TRIGGER, PIN_ECHO) < 15.0:
+            Parar()
+            for x in range(x, 5, 1):
+                print(
+                    'Objeto detectado em uma distância menor que 15cm. Por favor retirar da trajetoria.')
+        time.sleep(10)
+        if GPIO.input(leftSensor) == 0 and GPIO.input(rightSensor) == 0:
+            Frente_Esquerda_Off()
+            Frente_Direita_Off()
+            Tras_Esquerda_Off()
+            Tras_Direita_Off()
+        elif GPIO.input(leftSensor) == 1 and GPIO.input(rightSensor) == 1:
+            Frente_Esquerda()
+            Frente_Direita()
+            Tras_Esquerda()
+            Tras_Direita()
+        elif GPIO.input(leftSensor) == 1 and GPIO.input(rightSensor) == 0:
+            Frente_Esquerda()
+            Frente_Direita_Off()
+            Tras_Esquerda()
+            Tras_Direita_Off()
+        elif GPIO.input(leftSensor) == 0 and GPIO.input(rightSensor) == 1:
+            Frente_Esquerda_Off()
+            Frente_Direita()
+            Tras_Esquerda_Off()
+            Tras_Direita_Off()
 
 
 resp = 'sim'
@@ -178,12 +280,8 @@ while resp == 'sim':
 
 
 def estoques(x):
-    Frente_Direita
-    Frente_Esquerda
-    Tras_Direita
-    Tras_Esquerda
-    time.sleep(x)
-    Parar
+    segue_linha(x)
+    Parar()
     GPIO.cleanup()
     if categoria == 'Freios':
         Frente_Esquerda
@@ -220,7 +318,6 @@ y = 0
 
 
 def caminhos(y, posicao):
-    estoques(x)
     if categoria == 'Freios':
         while posicao == estoque_freios[y]:
             y += 1
@@ -237,16 +334,19 @@ def caminhos(y, posicao):
 
 def estoque_vazio(y, categoria):
     z = y * 2
-    Frente_Esquerda
-    Frente_Direita
-    Tras_Direita
-    Tras_Esquerda
-    time.sleep(z)
+    linha_seguir(z)
     Parar()
     print(
         f'Produto posicionado com sucesso na posição {y} nos estoques de categoria {categoria}')
     GPIO.cleanup()
+    fim = 'sim'
+    return fim
 
 
+fim = 'nao'
 caminhos(y, posicao)
-estoque_vazio(y, categoria)
+
+while fim == 'nao':
+    estoques(x)
+    estoque_vazio(y, categoria)
+GPIO.cleanup()

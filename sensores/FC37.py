@@ -1,14 +1,12 @@
 import RPi.GPIO as GPIO
 
+GPIO.setmode(GPIO.BOARD)  # Para numerar os pinos fisicos
+chuva = 7  # Define o pino onde estará o sensor de chuva
+GPIO.setup(chuva, GPIO.IN)  # Define o pino 7 como INPUT (receber informações)
 
-def itsrainingmen():
+
+def itsrainingmen(chuva):
     try:
-        GPIO.setmode(GPIO.BOARD)  # Para numerar os pinos fisicos
-        chuva = 7  # Define o pino onde estará o sensor de chuva
-
-        # Define o pino 7 como INPUT (receber informações)
-        GPIO.setup(chuva, GPIO.IN)
-
         # Caso o circuito não esteja completo (0), é sinal de que está chovendo.
         if chuva == 0:
             GPIO.cleanup()  # Limpa as portas GPIO para não entrar em conflito com nenhum sensor
@@ -21,4 +19,4 @@ def itsrainingmen():
         GPIO.cleanup()
 
 
-print(itsrainingmen())
+print(itsrainingmen(chuva))
