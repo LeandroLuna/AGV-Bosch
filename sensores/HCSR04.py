@@ -11,7 +11,7 @@ GPIO.setup(PIN_ECHO, GPIO.IN)  # Receber a onda, IN
 while True:
     try:
         # Garante que o sensor estará desligado, para maior precisão do mensuramento da distancia do objeto
-        GPIO.output(PIN_TRIGGER, GPIO.LOW)
+        GPIO.output(PIN_TRIGGER, False)
         print("Esperando o sensor estabilizar")
         time.sleep(2)  # Tempo para o mesmo estabilizar
 
@@ -19,11 +19,11 @@ while True:
         print("Calculando distância")
 
     # Liga o sensor que enviara a onda sonora
-        GPIO.output(PIN_TRIGGER, GPIO.HIGH)
+        GPIO.output(PIN_TRIGGER, True)
 
         time.sleep(0.00001)  # O sensor requer um de 1 nanosegundo para ativar
 
-        GPIO.output(PIN_TRIGGER, GPIO.LOW)  # Desligamos novamente
+        GPIO.output(PIN_TRIGGER, False)  # Desligamos novamente
 
         while GPIO.input(PIN_ECHO) == 0:  # Checaremos se o receptor da onda está desligado (não recebeu o sinal). Caso não, enviaremos para a variavel o tempo atual até que a condição se torne falsa (ou seja, 1, HIGH)
             tempo_inicial = time.time()  # Tempo de saida da onda
